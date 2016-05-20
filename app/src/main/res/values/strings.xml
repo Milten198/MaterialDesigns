@@ -2,4 +2,6 @@
     <string name="app_name">My Application</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
+    <string name="second_activity">Second activity!</string>
+    <string name="first_activity">First Activity!</string>
 </resources>
