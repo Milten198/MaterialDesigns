@@ -16,7 +16,11 @@ public class SecondActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+        } else {
+            ToastMessage.showMessage(this, "getSupportActionBar was null");
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -25,6 +29,7 @@ public class SecondActivity extends AppCompatActivity{
         int id = item.getItemId();
         if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
+            ToastMessage.showMessage(this, "Back");
         }
         return super.onOptionsItemSelected(item);
     }
