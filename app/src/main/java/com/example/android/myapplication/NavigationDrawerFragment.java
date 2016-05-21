@@ -22,8 +22,8 @@ public class NavigationDrawerFragment extends Fragment {
     ActionBarDrawerToggle mDrawerToggle;
     View view;
 
-    private boolean mUserLearnedDrawer;
-    private boolean mFromSavedInstanceState;
+    private boolean mUserLearnedDrawer = false;
+    private boolean mFromSavedInstanceState = false;
 
     public NavigationDrawerFragment() {
     }
@@ -43,7 +43,7 @@ public class NavigationDrawerFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
     }
 
-    public void setUp(int navDrawer, DrawerLayout drawerLayout, Toolbar toolbar) {
+    public void setUp(int navDrawer, DrawerLayout drawerLayout, final Toolbar toolbar) {
         view = getActivity().findViewById(navDrawer);
         this.mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer) {
@@ -63,10 +63,19 @@ public class NavigationDrawerFragment extends Fragment {
                 super.onDrawerClosed(drawerView);
                 getActivity().invalidateOptionsMenu();
             }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (slideOffset < 0.6) {
+                    toolbar.setAlpha(1 - slideOffset);
+                }
+            }
         };
 
         if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
             mDrawerLayout.openDrawer(view);
+        } else {
+            mDrawerLayout.closeDrawer(view);
         }
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerLayout.post(new Runnable() {
